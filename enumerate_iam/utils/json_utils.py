@@ -2,13 +2,12 @@ import datetime
 import json
 import collections
 
-
-DEFAULT_ENCODING = 'utf-8'
+DEFAULT_ENCODING = "utf-8"
 
 
 def map_nested_dicts(ob, func):
     if isinstance(ob, collections.Mapping):
-        return {k: map_nested_dicts(v, func) for k, v in ob.iteritems()}
+        return { k: map_nested_dicts(v, func) for k, v in ob.iteritems() }
     else:
         return func(ob)
 
@@ -18,13 +17,13 @@ def json_encoder(o):
         return o.isoformat()
 
     if isinstance(o, str):
-        return o.encode('utf-8', errors='ignore')
+        return o.encode("utf-8", errors="ignore")
 
     if isinstance(o, str):
-        return o.encode('utf-8', errors='ignore')
+        return o.encode("utf-8", errors="ignore")
 
 
-def smart_str(s, encoding=DEFAULT_ENCODING, errors='ignore'):
+def smart_str(s, encoding=DEFAULT_ENCODING, errors="ignore"):
     """
     Return a byte-string version of 's', encoded as specified in 'encoding'.
     """
@@ -41,9 +40,11 @@ def smart_str(s, encoding=DEFAULT_ENCODING, errors='ignore'):
 def json_write(filename, data):
     data = map_nested_dicts(data, smart_str)
 
-    data_str = json.dumps(data,
-                          indent=4,
-                          sort_keys=True,
-                          default=json_encoder)
+    data_str = json.dumps(
+      data,
+      indent=4,
+      sort_keys=True,
+      default=json_encoder
+    )
 
-    open(filename, 'wb').write(data_str)
+    open(filename, "wb").write(data_str)
