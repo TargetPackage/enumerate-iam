@@ -17,7 +17,7 @@ def json_encoder(o):
     if type(o) is datetime.date or type(o) is datetime.datetime:
         return o.isoformat()
 
-    if isinstance(o, unicode):
+    if isinstance(o, str):
         return o.encode('utf-8', errors='ignore')
 
     if isinstance(o, str):
@@ -28,7 +28,7 @@ def smart_str(s, encoding=DEFAULT_ENCODING, errors='ignore'):
     """
     Return a byte-string version of 's', encoded as specified in 'encoding'.
     """
-    if isinstance(s, unicode):
+    if isinstance(s, str):
         return s.encode(encoding, errors)
 
     # Already a byte-string, nothing to do here
@@ -46,4 +46,4 @@ def json_write(filename, data):
                           sort_keys=True,
                           default=json_encoder)
 
-    file(filename, 'wb').write(data_str)
+    open(filename, 'wb').write(data_str)
